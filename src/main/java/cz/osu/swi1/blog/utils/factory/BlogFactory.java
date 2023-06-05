@@ -17,12 +17,14 @@ public class BlogFactory {
     public final static List<BlogUser> BLOG_USERS;
     public final static List<Post> POSTS;
 
-    private static final int BLOG_USERS_MAX_SIZE = 10;
-    private static final int BLOG_USERS_MIN_SIZE = 5;
-    private static final int POSTS_MAX_SIZE = 30;
-    private static final int POSTS_MIN_SIZE = 20;
-    private static final int COMMENTS_MAX_SIZE = 10;
-    private static final int COMMENTS_MIN_SIZE = 5;
+    private static final int BLOG_USERS_MAX_SIZE = 5;
+    private static final int BLOG_USERS_MIN_SIZE = 3;
+
+    private static final int COMMENTS_MAX_SIZE = 5;
+    private static final int COMMENTS_MIN_SIZE = 0;
+
+    private static final int POSTS_MAX_SIZE = 20;
+    private static final int POSTS_MIN_SIZE = 5;
 
     private static final NameGenerator GENERATOR = new NameGenerator();
     private static final Lorem LOREM = LoremIpsum.getInstance();

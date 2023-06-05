@@ -3,6 +3,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +13,9 @@ import java.util.List;
 import java.util.stream.Collector;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "category")
 public class Category {
     @Id
@@ -27,9 +33,6 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private List<Post> posts;
 
-    public Category() {
-    }
-
     public Category(String name, LocalDate createdOn, BlogUser blogUser, List<Post> posts) {
         this.name = name;
         this.createdOn = createdOn;
@@ -38,49 +41,26 @@ public class Category {
     }
 
     public Category(String name) {
+
         this.name = name;
     }
 
+    public Category() {
 
-    public Long getId() {
-        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Category(String name, List<Post> posts) {
         this.name = name;
+
+        this.posts = posts;
     }
 
-    public LocalDate getCreatedOn() {
-        return createdOn;
-    }
+    public Category(String name, BlogUser blogUser) {
+        this.name = name;
 
-    public void setCreatedOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public BlogUser getBlogUser() {
-        return blogUser;
-    }
-
-    public void setBlogUser(BlogUser blogUser) {
         this.blogUser = blogUser;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 
     public JsonNode asJson() {
         ObjectMapper mapper = new ObjectMapper();
@@ -100,14 +80,5 @@ public class Category {
                 );
     }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", createdOn=" + createdOn +
-                ", blogUser=" + blogUser.getUserName() +
-                ", posts=" + posts.size() +
-                '}';
-    }
+
 }

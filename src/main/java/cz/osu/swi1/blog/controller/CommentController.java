@@ -6,6 +6,7 @@ import cz.osu.swi1.blog.entity.Comment;
 import cz.osu.swi1.blog.repository.CommentRepository;
 import cz.osu.swi1.blog.service.AuthService;
 import cz.osu.swi1.blog.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,12 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CommentController {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final AuthService authService;
+
 
     public CommentController(PostRepository postRepository, CommentRepository commentRepository, AuthService authService) {
         this.postRepository = postRepository;

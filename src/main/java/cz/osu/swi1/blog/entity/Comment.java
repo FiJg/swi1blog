@@ -2,10 +2,16 @@ package cz.osu.swi1.blog.entity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -38,45 +44,6 @@ public class Comment {
         return this;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public LocalDate getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public BlogUser getBlogUser() {
-        return blogUser;
-    }
-
-    public void setBlogUser(BlogUser blogUser) {
-        this.blogUser = blogUser;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
 
     public JsonNode asJson() {
         ObjectMapper mapper = new ObjectMapper();

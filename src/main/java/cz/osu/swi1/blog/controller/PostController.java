@@ -1,6 +1,7 @@
 package cz.osu.swi1.blog.controller;
 
 import cz.osu.swi1.blog.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import com.fasterxml.jackson.databind.JsonNode;
 import cz.osu.swi1.blog.dto.ContentRequest;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
     private PostRepository postRepository;
     private AuthService authService;
+
 
     public PostController(
             PostRepository postRepository,
@@ -37,16 +41,26 @@ public class PostController {
     @GetMapping(value = "/posts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<JsonNode>> posts(
             @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder
+            @RequestParam(required = false) String sortOrder,
+            @RequestParam(required = false) String searchTerm
     ) {
-        Sort.Direction direction = Sort.Direction.DESC; // Default sort order
 
-        // Check if sortOrder parameter is provided and set the sort direction accordingly
+        //default sort
+        Sort.Direction direction = Sort.Direction.DESC;
+
+
         if (sortOrder != null && sortOrder.equalsIgnoreCase("asc")) {
             direction = Sort.Direction.ASC;
         }
 
         Sort sort = Sort.by(direction, sortBy != null ? sortBy : "createdOn");
+
+        List<Post> allPosts = postRepository.findAll(sort);
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            allPosts = allPosts.stream()
+                    .filter(post -> post.getTitle().toLowerCase().contains(searchTerm.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
 
         return ResponseEntity.ok(
                 postRepository.findAll(sort).stream()

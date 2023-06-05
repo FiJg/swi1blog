@@ -41,11 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests(authoriseRequests -> authoriseRequests
-                        .antMatchers("/api/posts/**", "/api/auth/**", "/h2-console/**").permitAll()
-                        // require authentication on all requests
+                        .antMatchers("/api/posts/**", "/api/auth/**", "/h2-console/**", "/api/categories/**").permitAll()
+                        // require authen all requests except for these ones
                         .anyRequest().authenticated()
                 )
-                // disable CSRF
+                // disable CSRF (cross...)
                 .csrf(CsrfConfigurer::disable)
                 .headers().frameOptions().disable().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
