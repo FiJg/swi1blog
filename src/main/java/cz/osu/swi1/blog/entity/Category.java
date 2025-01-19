@@ -30,7 +30,7 @@ public class Category {
     @JoinColumn(name = "blog_user_id")
     private BlogUser blogUser;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Post> posts;
 
     public Category(String name, LocalDate createdOn, BlogUser blogUser, List<Post> posts) {

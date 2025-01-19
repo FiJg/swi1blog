@@ -29,9 +29,9 @@ public class BlogUser {
     private String email;
 
 
-    @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Post> posts;
-    @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "blogUser", cascade = {CascadeType.ALL},orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
 
